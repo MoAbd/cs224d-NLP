@@ -6,11 +6,14 @@ from cs224d.data_utils import *
 from q3_sgd import load_saved_params, sgd
 from q4_softmaxreg import softmaxRegression, getSentenceFeature, accuracy, softmax_wrapper
 
+def argmax(lst):
+  return lst.index(max(lst))
+
 # Try different regularizations and pick the best!
 # NOTE: fill in one more "your code here" below before running!
 REGULARIZATION = None   # Assign a list of floats in the block below
 ### YOUR CODE HERE
-raise NotImplementedError
+REGULARIZATION = [1e-3,1e-4,1e-5, 1e-6, 1e-7]
 ### END YOUR CODE
 
 # Load the dataset
@@ -22,7 +25,6 @@ nWords = len(tokens)
 _, wordVectors0, _ = load_saved_params()
 wordVectors = (wordVectors0[:nWords,:] + wordVectors0[nWords:,:])
 dimVectors = wordVectors.shape[1]
-
 # Load the train set
 trainset = dataset.getTrainSentences()
 nTrain = len(trainset)
@@ -86,7 +88,11 @@ BEST_REGULARIZATION = None
 BEST_WEIGHTS = None
 
 ### YOUR CODE HERE 
-raise NotImplementedError
+all_dev_results= []
+for re in results:
+    all_dev_results.append(re["dev"])
+BEST_REGULARIZATION = results[argmax(all_dev_results)]["reg"]
+BEST_WEIGHTS = results[argmax(all_dev_results)]["weights"]
 ### END YOUR CODE
 
 # Test your findings on the test set
