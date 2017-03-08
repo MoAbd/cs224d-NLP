@@ -8,7 +8,7 @@ def gradcheck_naive(f, x):
     - f should be a function that takes a single argument and outputs the cost and its gradients
     - x is the point (numpy array) to check the gradient at
     """ 
-
+    
     rndstate = random.getstate()
     random.setstate(rndstate)  
     fx, grad = f(x) # Evaluate function value at original point
@@ -23,15 +23,23 @@ def gradcheck_naive(f, x):
         ### make sure you call random.setstate(rndstate) before calling f(x) each time, this will make it 
         ### possible to test cost functions with built in randomness later
         ### YOUR CODE HERE:
-        raise NotImplementedError
+        x_h = x[ix]
+        x[ix] = x_h - h
+        random.setstate(rndstate)
+        fx_h1, grad_h1 = f(x)
+        x[ix] = x_h + h
+        random.setstate(rndstate)
+        fx_h2, grad_h2 = f(x)
+        numericgrad = (fx_h2 - fx_h1)/(2*h)
+        x[ix] = x_h 
         ### END YOUR CODE
 
         # Compare gradients
-        reldiff = abs(numgrad - grad[ix]) / max(1, abs(numgrad), abs(grad[ix]))
+        reldiff = abs(numericgrad - grad[ix]) / max(1, abs(numericgrad), abs(grad[ix]))
         if reldiff > 1e-5:
             print "Gradient check failed."
             print "First gradient error found at index %s" % str(ix)
-            print "Your gradient: %f \t Numerical gradient: %f" % (grad[ix], numgrad)
+            print "Your gradient: %f \t Numerical gradient: %f" % (grad[ix], numericgrad)
             return
     
         it.iternext() # Step to next dimension
@@ -59,7 +67,7 @@ def your_sanity_checks():
     """
     print "Running your sanity checks..."
     ### YOUR CODE HERE
-    raise NotImplementedError
+    
     ### END YOUR CODE
 
 if __name__ == "__main__":
