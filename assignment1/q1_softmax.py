@@ -21,7 +21,7 @@ def softmax(x):
     """
 
     ### YOUR CODE HERE
-    if len(x.shape) == 1:
+    '''if len(x.shape) == 1:
 
         x = np.exp(x)
         m = x / np.sum(x)
@@ -30,10 +30,14 @@ def softmax(x):
 	    N = x.shape[0]
 	    x -= np.max(x, axis=1).reshape(N, 1)
 	    x = np.exp(x)
-	    m = x / np.sum(x, axis=1).reshape(N, 1)
+	    m = x / np.sum(x, axis=1).reshape(N, 1)'''
+    x -= np.max(x, axis= x.ndim -1, keepdims=True)
+    x = np.exp(x)
+    x /= np.sum(x, axis=x.ndim -1, keepdims=True)
     ### END YOUR CODE
+
     
-    return m
+    return x
 
 def test_softmax_basic():
     """
