@@ -1,1 +1,3 @@
-/home/vulture/prog-courses/cs224d-NLP/assignment1/cs224d/datasets
+/assignment1/cs224d/datasets
+/assignment1/*.npy
+/assignment1/*.py*

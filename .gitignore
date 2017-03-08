@@ -1,1 +1,4 @@
 /assignment1/cs224d/datasets
+/assignment1/*.npy
+/assignment1/*.py*
+/assignment1/cs224d/*.py*
